@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="Free QR Code Generator - Create customizable QR codes for URLs, text, contacts and more">
+  <title>QR Gen Pro - Advanced QR Code Generator</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .logo i {
+      font-size: 28px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .section-title i {
+      color: var(--primary);
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+    
+    .row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .col {
+      flex: 1;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background-color: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-1px);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background-color: white;
+      color: var(--dark);
+      border: 1px solid #e2e8f0;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #f8fafc;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+    }
+    
+    .btn-success:hover {
+      background-color: #059669;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+      padding: 20px;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    #qrcode {
+      margin: 15px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .qr-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .tab.active {
+      border-bottom: 2px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .color-picker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .color-picker input[type="color"] {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #e2e8f0;
+    }
+    
+    .color-picker input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 50%;
+    }
+    
+    .color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    
+    .history {
+      margin-top: 30px;
+    }
+    
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      border-bottom: 1px solid #e2e8f0;
+      cursor: pointer;
+    }
+    
+    .history-item:hover {
+      background-color: #f8fafc;
+    }
+    
+    .history-item i {
+      color: var(--gray);
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--dark);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .toast.show {
+      opacity: 1;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--gray);
+      font-size: 14px;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .row {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <i class="fas fa-qrcode"></i>
+        <h1>QR Gen Pro</h1>
+      </div>
+      <p class="subtitle">Create, customize and share QR codes in seconds</p>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" data-tab="url">URL</div>
+      <div class="tab" data-tab="text">Text</div>
+      <div class="tab" data-tab="contact">Contact</div>
+      <div class="tab" data-tab="wifi">Wi-Fi</div>
+    </div>
+    
+    <div class="tab-content active" id="url-tab">
+      <div class="card">
+        <div class="input-group">
+          <label for="url-input"><i class="fas fa-link"></i> Website URL</label>
+          <input type="url" id="url-input" placeholder="https://example.com">
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="text-tab">
+      <div class="card">
+        <div class="input-group">
+          <label for="text-input"><i class="fas fa-font"></i> Text Content</label>
+          <textarea id="text-input" rows="3" placeholder="Enter any text you want to encode"></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="contact-tab">
+      <div class="card">
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <label for="contact-name"><i class="fas fa-user"></i> Name</label>
+              <input type="text" id="contact-name" placeholder="John Doe">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="contact-phone"><i class="fas fa-phone"></i> Phone</label>
+              <input type="tel" id="contact-phone" placeholder="+1234567890">
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="contact-email"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="contact-email" placeholder="email@example.com">
+        </div>
+        <div class="input-group">
+          <label for="contact-address"><i class="fas fa-map-marker-alt"></i> Address</label>
+          <input type="text" id="contact-address" placeholder="Street, City, Country">
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="wifi-tab">
+      <div class="card">
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <label for="wifi-ssid"><i class="fas fa-wifi"></i> Network Name (SSID)</label>
+              <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="wifi-password"><i class="fas fa-lock"></i> Password</label>
+              <input type="text" id="wifi-password" placeholder="Password">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <label for="wifi-security"><i class="fas fa-shield-alt"></i> Security Type</label>
+              <select id="wifi-security">
+                <option value="WPA">WPA/WPA2</option>
+                <option value="WEP">WEP</option>
+                <option value="">None</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="wifi-hidden"><i class="fas fa-eye-slash"></i> Hidden Network</label>
+              <select id="wifi-hidden">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3 class="section-title"><i class="fas fa-palette"></i> Customization</h3>
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <label>QR Code Size</label>
+            <select id="qr-size">
+              <option value="200">Small (200px)</option>
+              <option value="300" selected>Medium (300px)</option>
+              <option value="400">Large (400px)</option>
+              <option value="500">Extra Large (500px)</option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <label>Error Correction</label>
+            <select id="qr-ec">
+              <option value="L">Low (7%)</option>
+              <option value="M" selected>Medium (15%)</option>
+              <option value="Q">High (25%)</option>
+              <option value="H">Ultra (30%)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <label>Dark Color</label>
+            <div class="color-picker">
+              <input type="color" id="qr-dark" value="#000000">
+              <input type="text" id="qr-dark-hex" value="#000000" placeholder="#000000">
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <label>Light Color</label>
+            <div class="color-picker">
+              <input type="color" id="qr-light" value="#ffffff">
+              <input type="text" id="qr-light-hex" value="#ffffff" placeholder="#ffffff">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="qr-container">
+      <h3 class="section-title"><i class="fas fa-qrcode"></i> QR Code Preview</h3>
+      <div id="qrcode"></div>
+      <div class="qr-actions">
+        <button id="download-png" class="btn btn-success"><i class="fas fa-download"></i>Save</button>
+        <button id="reset-qr" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Clear</button>
+      </div>
+    </div>
+    
+    <div class="card history">
+      <h3 class="section-title"><i class="fas fa-history"></i> History</h3>
+      <div id="history-list">
+        <div class="history-empty">
+          <p>No QR codes generated yet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast"></div>
+  
+  <footer>
+    <p>QR Gen Pro &copy; 2023 </p>
+  </footer>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    // DOM Elements
+    const elements = {
+      tabs: document.querySelectorAll('.tab'),
+      tabContents: document.querySelectorAll('.tab-content'),
+      urlInput: document.getElementById('url-input'),
+      textInput: document.getElementById('text-input'),
+      contactName: document.getElementById('contact-name'),
+      contactPhone: document.getElementById('contact-phone'),
+      contactEmail: document.getElementById('contact-email'),
+      contactAddress: document.getElementById('contact-address'),
+      wifiSsid: document.getElementById('wifi-ssid'),
+      wifiPassword: document.getElementById('wifi-password'),
+      wifiSecurity: document.getElementById('wifi-security'),
+      wifiHidden: document.getElementById('wifi-hidden'),
+      qrSize: document.getElementById('qr-size'),
+      qrEC: document.getElementById('qr-ec'),
+      qrDark: document.getElementById('qr-dark'),
+      qrDarkHex: document.getElementById('qr-dark-hex'),
+      qrLight: document.getElementById('qr-light'),
+      qrLightHex: document.getElementById('qr-light-hex'),
+      qrcode: document.getElementById('qrcode'),
+      downloadPng: document.getElementById('download-png'),
+      downloadSvg: document.getElementById('download-svg'),
+      copyQr: document.getElementById('copy-qr'),
+      shareQr: document.getElementById('share-qr'),
+      saveHistory: document.getElementById('save-history'),
+      resetQr: document.getElementById('reset-qr'),
+      historyList: document.getElementById('history-list'),
+      toast: document.getElementById('toast')
+    };
+    
+    // Variables
+    let qrCode = null;
+    let history = JSON.parse(localStorage.getItem('qrHistory')) || [];
+    
+    // Initialize
+    function init() {
+      renderHistory();
+      setupEventListeners();
+      generateQR(); // Generate initial QR code
+    }
+    
+    // Event Listeners
+    function setupEventListeners() {
+      // Tab switching
+      elements.tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          elements.tabs.forEach(t => t.classList.remove('active'));
+          elements.tabContents.forEach(c => c.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+        });
+      });
+      
+      // Input changes that should trigger QR generation
+      const inputsToWatch = [
+        elements.urlInput, 
+        elements.textInput,
+        elements.contactName,
+        elements.contactPhone,
+        elements.contactEmail,
+        elements.contactAddress,
+        elements.wifiSsid,
+        elements.wifiPassword,
+        elements.wifiSecurity,
+        elements.wifiHidden
+      ];
+      
+      inputsToWatch.forEach(input => {
+        input.addEventListener('input', debounce(generateQR, 300));
+      });
+      
+      // QR customization changes
+      elements.qrSize.addEventListener('change', generateQR);
+      elements.qrEC.addEventListener('change', generateQR);
+      elements.qrDark.addEventListener('input', updateDarkColor);
+      elements.qrLight.addEventListener('input', updateLightColor);
+      elements.qrDarkHex.addEventListener('input', updateDarkColorFromHex);
+      elements.qrLightHex.addEventListener('input', updateLightColorFromHex);
+      
+      // Button actions
+      elements.downloadPng.addEventListener('click', downloadPNG);
+      elements.downloadSvg.addEventListener('click', downloadSVG);
+      elements.copyQr.addEventListener('click', copyQR);
+      elements.shareQr.addEventListener('click', shareQR);
+      elements.saveHistory.addEventListener('click', saveToHistory);
+      elements.resetQr.addEventListener('click', resetQR);
+    }
+    
+    // QR Code Generation
+    function generateQR() {
+      const activeTab = document.querySelector('.tab.active').dataset.tab;
+      let text = '';
+      
+      switch(activeTab) {
+        case 'url':
+          text = elements.urlInput.value.trim();
+          if (!text) text = 'https://example.com';
+          break;
+        case 'text':
+          text = elements.textInput.value.trim();
+          if (!text) text = 'Scan this QR code!';
+          break;
+        case 'contact':
+          const contact = {
+            name: elements.contactName.value.trim(),
+            tel: elements.contactPhone.value.trim(),
+            email: elements.contactEmail.value.trim(),
+            address: elements.contactAddress.value.trim()
+          };
+          text = `BEGIN:VCARD\nVERSION:3.0\nFN:${contact.name}\nTEL:${contact.tel}\nEMAIL:${contact.email}\nADR:${contact.address}\nEND:VCARD`;
+          break;
+        case 'wifi':
+          const wifi = {
+            ssid: elements.wifiSsid.value.trim(),
+            password: elements.wifiPassword.value.trim(),
+            security: elements.wifiSecurity.value,
+            hidden: elements.wifiHidden.value === 'true'
+          };
+          text = `WIFI:T:${wifi.security};S:${wifi.ssid};P:${wifi.password};H:${wifi.hidden};;`;
+          break;
+      }
+      
+      const size = parseInt(elements.qrSize.value);
+      const ecLevel = elements.qrEC.value;
+      const darkColor = elements.qrDark.value;
+      const lightColor = elements.qrLight.value;
+      
+      // Clear previous QR code
+      elements.qrcode.innerHTML = '';
+      
+      // Generate new QR code
+      qrCode = new QRCode(elements.qrcode, {
+        text: text,
+        width: size,
+        height: size,
+        colorDark: darkColor,
+        colorLight: lightColor,
+        correctLevel: QRCode.CorrectLevel[ecLevel]
+      });
+    }
+    
+    // Color Picker Functions
+    function updateDarkColor() {
+      const color = elements.qrDark.value;
+      elements.qrDarkHex.value = color;
+      generateQR();
+    }
+    
+    function updateLightColor() {
+      const color = elements.qrLight.value;
+      elements.qrLightHex.value = color;
+      generateQR();
+    }
+    
+    function updateDarkColorFromHex() {
+      const hex = elements.qrDarkHex.value;
+      if (/^#[0-9A-F]{6}$/i.test(hex)) {
+        elements.qrDark.value = hex;
+        generateQR();
+      }
+    }
+    
+    function updateLightColorFromHex() {
+      const hex = elements.qrLightHex.value;
+      if (/^#[0-9A-F]{6}$/i.test(hex)) {
+        elements.qrLight.value = hex;
+        generateQR();
+      }
+    }
+    
+    // Download Functions
+   function downloadPNG() {
+  if (!qrCode) return;
+  const canvas = elements.qrcode.querySelector('canvas');
+  if (!canvas) return;
+
+  const borderSize = 40; // px, adjust for thicker/thinner
+  const newCanvas = document.createElement('canvas');
+  newCanvas.width = canvas.width + borderSize * 2;
+  newCanvas.height = canvas.height + borderSize * 2;
+
+  const ctx = newCanvas.getContext('2d');
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+  ctx.drawImage(canvas, borderSize, borderSize);
+
+  const dataURL = newCanvas.toDataURL("image/png");
+
+  if (window.Android && window.Android.saveImage) {
+    window.Android.saveImage(dataURL);
+  } else {
+    const link = document.createElement('a');
+    link.download = 'qr-code.png';
+    link.href = dataURL;
+    link.click();
+  }
+
+  showToast('PNG saved with border!');
+}
+
+
+
+   function downloadSVG() {
+  if (!qrCode) return;
+
+  const activeTab = document.querySelector('.tab.active').dataset.tab;
+  let fileName = 'qr-code.svg';
+
+  if (activeTab === 'url') {
+    const url = elements.urlInput.value.trim();
+    if (url) {
+      try {
+        const domain = new URL(url).hostname.replace('www.', '');
+        fileName = `qr-${domain}.svg`;
+      } catch (e) {}
+    }
+  }
+
+  const svgElement = elements.qrcode.querySelector('svg');
+  if (!svgElement) {
+    showToast("No SVG found!");
+    return;
+  }
+
+  const borderSize = 20; // px border around QR
+  const width = parseInt(svgElement.getAttribute("width")) || 256;
+  const height = parseInt(svgElement.getAttribute("height")) || 256;
+
+  const newWidth = width + borderSize * 2;
+  const newHeight = height + borderSize * 2;
+
+  const svgData =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${newWidth}" height="${newHeight}">
+       <rect width="100%" height="100%" fill="white"/>
+       <g transform="translate(${borderSize},${borderSize})">
+         ${svgElement.outerHTML}
+       </g>
+     </svg>`;
+
+  if (window.Android && window.Android.saveSVG) {
+    window.Android.saveSVG(svgData, fileName);
+  } else {
+    const blob = new Blob([svgData], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = fileName;
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  showToast('SVG saved with border!');
+}
+
+
+    
+    // Copy to Clipboard
+    function copyQR() {
+  if (!qrCode) return;
+  
+  const canvas = elements.qrcode.querySelector('canvas');
+  if (!canvas) return;
+
+  const dataURL = canvas.toDataURL("image/png");
+
+  if (window.Android && window.Android.copyToClipboard) {
+    // Use Android share sheet
+    window.Android.copyToClipboard(dataURL);
+  } else {
+    // Browser fallback
+    canvas.toBlob(blob => {
+      const item = new ClipboardItem({ 'image/png': blob });
+      navigator.clipboard.write([item])
+        .then(() => showToast('QR code copied to clipboard'))
+        .catch(() => {
+          const input = document.createElement('input');
+          document.body.appendChild(input);
+          input.value = dataURL;
+          input.select();
+          document.execCommand('copy');
+          document.body.removeChild(input);
+          showToast('QR code URL copied');
+        });
+    });
+  }
+}
+
+    // Share QR Code
+    function shareQR() {
+      if (!navigator.share) {
+        showToast('Web Share API not supported in your browser');
+        return;
+      }
+      
+      const canvas = elements.qrcode.querySelector('canvas');
+      if (!canvas) return;
+      
+      canvas.toBlob(blob => {
+        const file = new File([blob], 'qr-code.png', { type: 'image/png' });
+        
+        navigator.share({
+          title: 'QR Code',
+          text: 'Check out this QR code I generated',
+          files: [file]
+        }).catch(e => {
+          if (e.name !== 'AbortError') {
+            showToast('Could not share QR code');
+          }
+        });
+      });
+    }
+    
+    // History Functions
+    function saveToHistory() {
+      if (!qrCode) return;
+      
+      const activeTab = document.querySelector('.tab.active').dataset.tab;
+      let title = '';
+      let content = '';
+      
+      switch(activeTab) {
+        case 'url':
+          title = 'URL QR Code';
+          content = elements.urlInput.value.trim();
+          break;
+        case 'text':
+          title = 'Text QR Code';
+          content = elements.textInput.value.trim();
+          break;
+        case 'contact':
+          title = 'Contact QR Code';
+          content = `${elements.contactName.value.trim()}'s contact`;
+          break;
+        case 'wifi':
+          title = 'Wi-Fi QR Code';
+          content = `Network: ${elements.wifiSsid.value.trim()}`;
+          break;
+      }
+      
+      if (!content) {
+        showToast('Nothing to save');
+        return;
+      }
+      
+      const qrData = {
+        id: Date.now(),
+        type: activeTab,
+        title: title,
+        content: content,
+        date: new Date().toLocaleString(),
+        size: parseInt(elements.qrSize.value),
+        ecLevel: elements.qrEC.value,
+        darkColor: elements.qrDark.value,
+        lightColor: elements.qrLight.value
+      };
+      
+      history.unshift(qrData);
+      if (history.length > 20) history.pop();
+      
+      localStorage.setItem('qrHistory', JSON.stringify(history));
+      renderHistory();
+      
+      showToast('Saved to history');
+    }
+    
+    function renderHistory() {
+      if (history.length === 0) {
+        elements.historyList.innerHTML = '<div class="history-empty"><p>No QR codes generated yet</p></div>';
+        return;
+      }
+      
+      elements.historyList.innerHTML = '';
+      
+      history.forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.innerHTML = `
+          <div>
+            <strong>${item.title}</strong>
+            <p>${item.content.length > 30 ? item.content.substring(0, 30) + '...' : item.content}</p>
+            <small>${item.date}</small>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        `;
+        
+        historyItem.addEventListener('click', () => loadFromHistory(item));
+        elements.historyList.appendChild(historyItem);
+      });
+    }
+    
+    function loadFromHistory(item) {
+      // Switch to the appropriate tab
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      const tab = document.querySelector(`.tab[data-tab="${item.type}"]`);
+      const content = document.getElementById(`${item.type}-tab`);
+      
+      if (tab && content) {
+        tab.classList.add('active');
+        content.classList.add('active');
+      }
+      
+      // Fill in the form fields
+      switch(item.type) {
+        case 'url':
+          elements.urlInput.value = item.content;
+          break;
+        case 'text':
+          elements.textInput.value = item.content;
+          break;
+        case 'contact':
+          // This is simplified - real implementation would parse the vCard
+          const contactParts = item.content.split(' ');
+          elements.contactName.value = contactParts[0] || '';
+          break;
+        case 'wifi':
+          // This is simplified - real implementation would parse the wifi string
+          const wifiParts = item.content.split(':');
+          elements.wifiSsid.value = wifiParts[1] || '';
+          break;
+      }
+      
+      // Set customization options
+      elements.qrSize.value = item.size;
+      elements.qrEC.value = item.ecLevel;
+      elements.qrDark.value = item.darkColor;
+      elements.qrLight.value = item.lightColor;
+      elements.qrDarkHex.value = item.darkColor;
+      elements.qrLightHex.value = item.lightColor;
+      
+      // Generate the QR code
+      generateQR();
+      
+      showToast('Loaded from history');
+    }
+    
+    // Reset QR Code
+    function resetQR() {
+      const activeTab = document.querySelector('.tab.active').dataset.tab;
+      
+      switch(activeTab) {
+        case 'url':
+          elements.urlInput.value = '';
+          break;
+        case 'text':
+          elements.textInput.value = '';
+          break;
+        case 'contact':
+          elements.contactName.value = '';
+          elements.contactPhone.value = '';
+          elements.contactEmail.value = '';
+          elements.contactAddress.value = '';
+          break;
+        case 'wifi':
+          elements.wifiSsid.value = '';
+          elements.wifiPassword.value = '';
+          elements.wifiSecurity.value = 'WPA';
+          elements.wifiHidden.value = 'false';
+          break;
+      }
+      
+      elements.qrSize.value = '300';
+      elements.qrEC.value = 'M';
+      elements.qrDark.value = '#000000';
+      elements.qrLight.value = '#ffffff';
+      elements.qrDarkHex.value = '#000000';
+      elements.qrLightHex.value = '#ffffff';
+      
+      generateQR();
+      
+      showToast('Form reset');
+    }
+    
+    // Utility Functions
+    function debounce(func, wait) {
+      let timeout;
+      return function() {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+      };
+    }
+    
+    function showToast(message) {
+      elements.toast.textContent = message;
+      elements.toast.classList.add('show');
+      
+      setTimeout(() => {
+        elements.toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Initialize the app
+    init();
+  </script>
+  
+  <!-- Web App Manifest -->
+  <script>
+    const manifest = {
+      "name": "QR Gen Pro",
+      "short_name": "QR Gen",
+      "start_url": ".",
+      "display": "standalone",
+      "background_color": "#4f46e5",
+      "theme_color": "#4f46e5",
+      "description": "Advanced QR Code Generator",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "icons/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    };
+    
+    const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(blob);
+    document.querySelector('link[rel="manifest"]').href = manifestURL;
+  </script>
+<script>
+// Disable Right-Click
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Disable Keys (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C)
+document.onkeydown = function (e) {
+    // F12
+    if (e.keyCode === 123) return false;
+
+    // CTRL+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) return false;
+
+    // CTRL+Shift+J
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 74) return false;
+
+    // CTRL+U
+    if (e.ctrlKey && e.keyCode === 85) return false;
+
+    // CTRL+Shift+C
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 67) return false;
+};
+
+// Detect DevTools Opening (bypassable but annoying)
+(function() {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function () {
+            alert("DevTools is opened!");
+        }
+    });
+    console.log(element);
+})();
+</script>
+
+</body>
+</html>

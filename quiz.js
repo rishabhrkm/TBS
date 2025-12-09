@@ -45,7 +45,7 @@ const questions = [
   {
     question: "Viswanathan Anand became India's first?",
     image: "",
-    options: ["FIDE World Champion", "Chess Grandmaster", "Chess Olympiad Gold Medallist", "World Rapid Champion"],
+    options: ["FIDE World Champion", "Padma Bhushan Awardee", "Chess Olympiad Gold Medallist", "World Rapid Champion"],
     answer: 1,
     explanation: "Anand became India's first chess grandmaster in 1988 at the age of 18."
   },
