@@ -5,15 +5,22 @@
   <title>Viswanathan Anand Birthday Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="container" id="container">
     <form id="start-form" class="centered">
-      <h1>The Board Slashers</h1>
+      <img src="tbs-logo.png" alt="Viswanathan Anand">
+      <h1><i class="fas fa-chess-king"></i> The Board Slashers</h1>
       <h2>Viswanathan Anand Birthday Quiz</h2>
-      <p>Enter your name to begin:</p>
-      <input type="text" id="username" placeholder="Your name" required/>
-      <button type="submit">Start Quiz</button>
+      <p>Test your knowledge about India's chess legend!</p>
+      <input type="text" id="username" placeholder="Enter your name" required/>
+      <button type="submit">
+        <i class="fas fa-play-circle"></i> Start Quiz
+      </button>
+      <p style="margin-top: 20px; color: #b8c1ec; font-size: 0.9em;">
+        <i class="fas fa-info-circle"></i> 10 questions about Anand's life and career
+      </p>
     </form>
   </div>
   <script src="quiz.js"></script>
