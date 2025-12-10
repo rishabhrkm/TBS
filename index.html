@@ -653,9 +653,43 @@
             observer.observe(piece);
         });
     </script>
+                <script>
+// Disable Right-Click
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Disable Keys (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C)
+document.onkeydown = function (e) {
+    // F12
+    if (e.keyCode === 123) return false;
+
+    // CTRL+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) return false;
+
+    // CTRL+Shift+J
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 74) return false;
+
+    // CTRL+U
+    if (e.ctrlKey && e.keyCode === 85) return false;
+
+    // CTRL+Shift+C
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 67) return false;
+};
+
+// Detect DevTools Opening (bypassable but annoying)
+(function() {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function () {
+            alert("DevTools is opened!");
+        }
+    });
+    console.log(element);
+})();
+</script>
 </body>
 
 </html>
+
 
 
 
