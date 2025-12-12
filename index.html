@@ -512,31 +512,11 @@
                     </div>
                 </div> -->
                 
-
-                <div class="buttons-grid">
-                    <a href="https://share.google/b62a8xFoDv4DJUiR3" class="button"  >
-                        <i class="fas fa-chess-king"></i> Standard Format Tournament(Register Now!)
-                    </a>
-                </div>
-
-                         <div class="buttons-grid">
-                    <a href="https://share.google/sCfWHj7hHd7p45gpB" class="button"  >
-                        <i class="fas fa-chess-queen"></i> Chess960 Format Tournament(Register Now!)
-                    </a>
-                </div>
-                        
-                <div class="buttons-grid">
-                    <a href="#" class="button"  >
-                        <i class="fas fa-chess-rook"></i>Puzzle Mania (In Club Group)
-                    </a>
-                </div>
-                        
                 <div class="buttons-grid">
                     <a href="Quiz.html" class="button"  >
-                        <i class="fas fa-chess-knight"></i> Join Quiz (Birthday Special: Vishy Sir "8 PM")
+                        <i class="fas fa-question-circle"></i> Join Quiz (Birthday Special: Vishy Sir)
                     </a>
                 </div>
-
             </section>
 
             
@@ -585,7 +565,7 @@
                         <i class="fas fa-envelope"></i>
                         <div class="contact-details">
                             <span class="contact-label">Email Address</span>
-                            <span class="contact-value">theboardslashersbhu@gmail.com</span>
+                            <span class="contact-value">theboardslashers@gmail.com</span>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -621,7 +601,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 The Board Slashers Chess Club. Banaras Hindu University. All rights reserved.</p>
+            <p>© 2023 The Board Slashers Chess Club. Banaras Hindu University. All rights reserved.</p>
             <p>Designed with ♟️ for chess enthusiasts</p>
         </footer>
     </div>
@@ -652,50 +632,6 @@
         document.querySelectorAll('.chess-piece').forEach(piece => {
             observer.observe(piece);
         });
-    
-// Disable Right-Click
-document.addEventListener('contextmenu', event => event.preventDefault());
-
-// Disable Keys (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C)
-document.onkeydown = function (e) {
-    // F12
-    if (e.keyCode === 123) return false;
-
-    // CTRL+Shift+I
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) return false;
-
-    // CTRL+Shift+J
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 74) return false;
-
-    // CTRL+U
-    if (e.ctrlKey && e.keyCode === 85) return false;
-
-    // CTRL+Shift+C
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 67) return false;
-};
-
-// Detect DevTools Opening (bypassable but annoying)
-(function() {
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-        get: function () {
-            alert("DevTools is opened!");
-        }
-    });
-    console.log(element);
-})();
-</script>
+    </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
