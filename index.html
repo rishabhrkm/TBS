@@ -362,6 +362,27 @@
             .event-top { flex-direction: column; align-items: flex-start; gap: 8px; }
             .cta-button { width: 100%; justify-content: center; padding: 10px 12px; }
         }
+        /* Collapsible Calendar */
+.calendar-content {
+    display: none;
+    margin-top: 12px;
+}
+
+.calendar-toggle {
+    cursor: pointer;
+    user-select: none;
+    justify-content: space-between;
+}
+
+.calendar-arrow {
+    transition: transform 0.3s ease;
+    margin-left: auto;
+}
+
+.calendar-open .calendar-arrow {
+    transform: rotate(180deg);
+}
+
     </style>
 </head>
 <body>
@@ -399,15 +420,28 @@
 
             <!-- Club Calendar: full-year 2026 -->
             <section class="section" id="calendar-section">
-                <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Club Calendar — 2026</h2>
-                <p style="color:var(--gray); margin-bottom:10px;">All scheduled online tournaments (bi‑weekly). Past events are dimmed. Tap any event to open its registration/link.</p>
-                <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px;">
-                    <label style="color:var(--gray); font-weight:600;">Show past events</label>
-                    <input id="toggle-past" type="checkbox" checked />
-                </div>
-                <div class="calendar" id="calendar-grid">
-                    <!-- JS will populate months here -->
-                </div>
+                <h2 class="section-title calendar-toggle" id="calendar-toggle">
+    <i class="fas fa-calendar-alt"></i>
+    Club Calendar — 2026
+    <span class="calendar-arrow"><i class="fas fa-chevron-down"></i></span>
+</h2>
+
+                <div class="calendar-content" id="calendar-content">
+    <p style="color:var(--gray); margin-bottom:10px;">
+        All scheduled online tournaments (bi-weekly). Past events are dimmed.
+        Tap any event to open its registration/link.
+    </p>
+
+    <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px;">
+        <label style="color:var(--gray); font-weight:600;">Show past events</label>
+        <input id="toggle-past" type="checkbox" checked />
+    </div>
+
+    <div class="calendar" id="calendar-grid">
+        <!-- JS will populate months here -->
+    </div>
+</div>
+
             </section>
 
             <!-- Explore & Connect -->
@@ -774,6 +808,22 @@
                 if (up) up.scrollIntoView({ behavior: 'smooth' });
             }
         });
+        // Calendar collapse / expand
+const calendarToggle = document.getElementById('calendar-toggle');
+const calendarContent = document.getElementById('calendar-content');
+
+calendarToggle.addEventListener('click', () => {
+    const isOpen = calendarContent.style.display === 'block';
+
+    calendarContent.style.display = isOpen ? 'none' : 'block';
+    calendarToggle.classList.toggle('calendar-open', !isOpen);
+
+    // Render calendar only when opened
+    if (!isOpen) {
+        renderCalendar(document.getElementById('toggle-past').checked);
+    }
+});
+
     </script>
 </body>
 </html>
